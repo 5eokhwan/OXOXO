@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import LeftMenu from "./Sections/LeftMenu";
 import { Drawer, Button, Icon } from "antd";
+import { withRouter } from "react-router-dom";
+
 import "./Sections/Navbar.css";
 
-function NavBar() {
+const NavBar = withRouter((props) => {
   const [visible, setVisible] = useState(false);
 
   const showDrawer = () => {
@@ -20,7 +22,7 @@ function NavBar() {
       style={{ position: "fixed", zIndex: 5, width: "100%" }}
     >
       <div className="menu__logo">
-        <a href="/">OXOXO</a>
+        <a onClick={() => props.history.push("/")}>OXOXO</a>
       </div>
       <div className="menu__container">
         <div className="menu_left">
@@ -46,6 +48,6 @@ function NavBar() {
       </div>
     </nav>
   );
-}
+});
 
 export default NavBar;

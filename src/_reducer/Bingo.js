@@ -50,7 +50,6 @@ export const bingoRemove = (id) => {
 const initState = {
   bingos: bingos,
   spaces_info: null,
-  check_state: null,
 };
 
 //리듀서

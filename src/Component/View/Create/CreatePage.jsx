@@ -53,6 +53,11 @@ function BingoCreatePage(props) {
   const bingos = useSelector((state) => state.bingos);
   const isUpdate = useRef(/update/.test(props.match.url));
   useEffect(() => {
+    if (isUpdate.current !== /update/.test(props.match.url)) {
+      props.history.push("/");
+      props.history.goBack();
+      return;
+    }
     if (isUpdate.current) {
       console.log(bingos, props.match.params.number);
       const bingo = bingos.find(
@@ -60,11 +65,12 @@ function BingoCreatePage(props) {
       );
       setBasicInfo(bingo.basicInfo);
       setGlobalInfo(bingo.globalInfo);
+      const tempArr = [...bingo.spaceInfos];
       for (let i = bingo.spaceInfos.length; i < Math.pow(maxScale, 2); i++) {
-        bingo.spaceInfos.push(defaultSpaceInfo);
+        tempArr.push(defaultSpaceInfo);
       }
-      dispatch(spaceInit(bingo.spaceInfos));
-    } else
+      dispatch(spaceInit(tempArr));
+    } else {
       dispatch(
         spaceInit(
           Array.from({ length: Math.pow(maxScale, 2) }).map(
@@ -72,7 +78,8 @@ function BingoCreatePage(props) {
           )
         )
       );
-  }, []);
+    }
+  }, [props.match.url]);
 
   const onBasicInfoChange = (e) => {
     const { value, name } = e.target;
@@ -147,12 +154,14 @@ function BingoCreatePage(props) {
     };
     if (!isUpdate.current) dispatch(bingoInsert(data));
     else {
+      console.log("update???");
       data.number = parseInt(props.match.params.number);
       dispatch(bingoUpdate(data));
     }
     props.history.push("/");
   };
   const renderSpacesForInput = (BoardScale) => {
+    console.log("rende", spaces_info);
     let i;
     let repeat = BoardScale * BoardScale;
     let lst = [];
@@ -179,7 +188,7 @@ function BingoCreatePage(props) {
           margin: "30px 30px",
         }}
       >
-        <Form onSubmit={onSubmit}>
+        <Form>
           <Row gutter={[16, 16]}>
             <Col lg={8} md={24}>
               <Row gutter={[16, 16]}>

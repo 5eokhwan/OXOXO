@@ -15,7 +15,7 @@ function Space(props) {
       style={{
         width: `${100 / props.boardScale}%`,
         height: `${100 / props.boardScale}%`,
-        fontSize: `${6 / props.boardScale}em`,
+        fontSize: `${5 / props.boardScale}em`,
         color: props.info.fontColor,
         boxSizing: "border-box",
         display: "inline-flex",
@@ -26,7 +26,9 @@ function Space(props) {
         border: `3px ${props.lineColor} solid`,
       }}
     >
-      <div>{props.info.content}</div>
+      <div className={"spaceText"} style={{ width: "100%" }}>
+        {props.info.content}
+      </div>
     </div>
   );
 }

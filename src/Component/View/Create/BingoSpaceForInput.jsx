@@ -14,7 +14,10 @@ function BingoSpaceForInput(props) {
     if (props.focusSpace !== props.index) {
       setIsActive(false);
     }
-  }, [props.focusSpace]);
+    setInfo({
+      ...props.info,
+    });
+  }, [props.focusSpace, props.info]);
 
   const onFocus = (e) => {
     setIsActive(true); //이거 없어도 될듯한데
@@ -143,7 +146,7 @@ function BingoSpaceForInput(props) {
           color: Info.fontColor,
           border: "none",
           textAlign: "center",
-          fontSize: `${6 / props.boardScale}em`,
+          fontSize: `${5 / props.boardScale}em`,
         }}
       ></TextArea>
     </div>
